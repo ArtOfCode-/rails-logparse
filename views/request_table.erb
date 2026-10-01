@@ -1,0 +1,33 @@
+<div class="table-wrap panel">
+  <table class="request-table">
+    <thead>
+      <tr><th>Request</th><th>Started</th><th>Duration</th><th>Views</th><th>Database</th></tr>
+    </thead>
+    <tbody>
+      <% if requests.empty? %>
+        <tr><td class="empty-state" colspan="5">No requests found. Import a Rails log file to get started.</td></tr>
+      <% end %>
+      <% requests.each do |request| %>
+        <tr class="request-row">
+          <td>
+            <details class="request-details" data-logs-url="/requests/<%= h(request["request_uuid"]) %>/logs">
+              <summary class="request-summary">
+                <span class="request-route">
+                  <span class="request-method"><%= h(request["method"] || "—") %></span>
+                  <span class="request-path" title="<%= h(request["path"] || "Path unavailable") %>"><%= h(request["path"] || "Path unavailable") %></span>
+                </span>
+                <span class="request-subdomain"><%= h(request["subdomain"] || "Unknown subdomain") %></span>
+                <span class="request-id"><%= h(request["request_uuid"]) %></span>
+              </summary>
+              <div class="log-container" aria-live="polite"><span class="muted">Open to load log entries…</span></div>
+            </details>
+          </td>
+          <td class="nowrap"><%= h(formatted_time(request["started_at"])) %></td>
+          <td><%= h(duration(request["total"])) %></td>
+          <td><%= h(duration(request["views"])) %></td>
+          <td><%= h(duration(request["db"])) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

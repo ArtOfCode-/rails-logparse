@@ -1,0 +1,14 @@
+<% if entries.empty? %>
+  <p class="muted">No matching log entries.</p>
+<% else %>
+  <div class="log-list">
+    <% entries.each do |entry| %>
+      <article class="log-entry">
+        <span class="level level-<%= h(entry["log_level"].downcase) %>"><%= h(entry["full_log_level"]) %></span>
+        <time><%= h(formatted_time(entry["created"])) %></time>
+        <span class="log-pid">PID <%= h(entry["pid"]) %></span>
+        <p><%= h(entry["log_message"]) %></p>
+      </article>
+    <% end %>
+  </div>
+<% end %>

@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= h(@page_title || "Rails Log Explorer") %></title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/">Rails <span>Log Explorer</span></a>
+      <nav><a href="/">Overview</a><a href="/requests">All requests</a></nav>
+    </header>
+    <main class="container">
+      <%= yield %>
+    </main>
+    <footer>Local log data · <%= h(File.basename(LogExplorer::DATABASE_PATH)) %></footer>
+  </body>
+</html>

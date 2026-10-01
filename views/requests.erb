@@ -1,0 +1,55 @@
+<section class="page-heading">
+  <div>
+    <p class="eyebrow">REQUEST LOG</p>
+    <h1>All requests</h1>
+    <p class="muted"><%= @total_requests %> matching requests · page <%= @page %> of <%= @total_pages %></p>
+  </div>
+  <a class="button secondary" href="/">← Back to overview</a>
+</section>
+
+<form class="filters panel" action="/requests" method="get">
+  <div class="filters-heading">
+    <div>
+      <p class="eyebrow">NARROW THE RESULTS</p>
+      <h2>Filter requests</h2>
+    </div>
+    <a class="text-link" href="/requests">Clear filters</a>
+  </div>
+  <div class="filter-fields">
+    <label>
+      <span>Method</span>
+      <select name="method">
+        <option value="">All methods</option>
+        <% @methods.each do |method| %>
+          <option value="<%= h(method) %>" <%= 'selected' if @filters[:method] == method %>><%= h(method) %></option>
+        <% end %>
+      </select>
+    </label>
+    <label>
+      <span>Path contains</span>
+      <input type="search" name="path" value="<%= h(@filters[:path]) %>" placeholder="/users">
+    </label>
+    <label>
+      <span>Subdomain contains</span>
+      <input type="search" name="subdomain" value="<%= h(@filters[:subdomain]) %>" placeholder="www">
+    </label>
+    <label>
+      <span>Started after (UTC)</span>
+      <input type="datetime-local" name="from" value="<%= h(@filters[:from]) %>">
+    </label>
+    <label>
+      <span>Started before (UTC)</span>
+      <input type="datetime-local" name="to" value="<%= h(@filters[:to]) %>">
+    </label>
+  </div>
+  <% if @filter_error %><p class="filter-error" role="alert"><%= h(@filter_error) %></p><% end %>
+  <div class="filter-actions"><button class="button primary" type="submit">Apply filters</button></div>
+</form>
+
+<%= erb :request_table, layout: false, locals: { requests: @requests } %>
+
+<nav class="pagination" aria-label="Request pages">
+  <% if @page > 1 %><a class="button secondary" href="<%= h(requests_page_url(@page - 1)) %>">← Previous</a><% else %><span></span><% end %>
+  <span>Page <%= @page %> of <%= @total_pages %></span>
+  <% if @page < @total_pages %><a class="button secondary" href="<%= h(requests_page_url(@page + 1)) %>">Next →</a><% else %><span></span><% end %>
+</nav>
