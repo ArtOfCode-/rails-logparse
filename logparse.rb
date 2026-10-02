@@ -41,12 +41,8 @@ def create_schema(database)
       db INTEGER
     );
 
-    CREATE INDEX entries_request_uuid ON entries (request_uuid);
+    CREATE INDEX IF NOT EXISTS entries_request_uuid ON entries (request_uuid);
   SQL
-
-  request_columns = database.execute("PRAGMA table_info(requests)").map { |column| column[1] }
-  database.execute("ALTER TABLE requests ADD COLUMN method TEXT") unless request_columns.include?("method")
-  database.execute("ALTER TABLE requests ADD COLUMN path TEXT") unless request_columns.include?("path")
 end
 
 def import_log(log_path, database)
