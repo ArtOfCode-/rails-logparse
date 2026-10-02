@@ -3,7 +3,8 @@ Utility tool to parse & ingest Rails logs into a database format, and a web view
 request logs.
 
 ## AI Disclosure ([RAID](https://responsibleaidisclosure.com/))
-![Image: This software was created using AI tools.](https://github.com/waltzaround/RAID/blob/main/assets/AI.png)
+<img src="https://github.com/waltzaround/RAID/blob/main/assets/AI.png" height="48"
+     alt="Image: This software was created using AI tools." />
 
 This software was created using "AI" (LLM) tools. No hard feelings if that puts you off.
 
